@@ -1,0 +1,25 @@
+tasks:
+  - name: replicate-me1
+    source:
+      getCheckpointOpts:
+        index: replicator-checkpoints
+        id: replicate-me1
+      searchUpdatedField: updated
+      searchOpts:
+        index: the-index-to-replicate-from
+        size: 5000
+        scroll: 30s
+      elasticClientOpts:
+        node: https://xyz.region1.aws.found.io:9243
+        auth:
+          username: elastic
+          password: the_password
+        requestTimeout: 300000
+    destination:
+      index: the-index-to-replicate-to
+      elasticClientOpts:
+        node: https://xyz.region2.ap-southeast-2.aws.found.io:9243
+        auth:
+          username: elastic
+          password: the_password
+        requestTimeout: 300000
