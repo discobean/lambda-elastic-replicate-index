@@ -2,3 +2,4 @@ config-dev.yaml
 config-prod.yaml
 .idea
 node_modules
+.serverless
