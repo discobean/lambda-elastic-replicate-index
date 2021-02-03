@@ -26,7 +26,7 @@ provider:
     STAGE: ${opt:stage, self:provider.stage, 'dev'}
 
 functions:
-  replicate:
+  replicate-test1:
     handler: handler.replicate
     environment:
       # Task to replicate from the config-${opt:stage}.yaml file
