@@ -22,6 +22,7 @@ provider:
   # stage is dev or prod, dev will use config-dev.yaml, prod will use config-prod.yaml
   stage: dev
   region: us-east-1
+  timeout: 300
   environment:
     STAGE: ${opt:stage, self:provider.stage, 'dev'}
 
