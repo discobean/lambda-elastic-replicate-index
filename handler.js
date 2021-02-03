@@ -16,7 +16,7 @@ module.exports.replicate = async (event) => {
 
   let tasks = {};
   try {
-    console.log("Reading configuration...");
+    console.log("Reading configuration: " + filename);
     const fileContents = fs.readFileSync(filename, "utf8");
     const data = yaml.load(fileContents);
     tasks = data.tasks;
@@ -25,6 +25,23 @@ module.exports.replicate = async (event) => {
     return;
   }
 
+  // if only want to process one task, then just take that out of the configuration
+  if (process.env.TASK) {
+    console.log("Only processing one task: " + process.env.TASK);
+
+    const task = tasks.find((el) => el.name === process.env.TASK);
+    if (!task) {
+      console.log("Task not found in config file: " + process.env.TASK);
+      return;
+    }
+
+    tasks = [task];
+  } else {
+    console.log("Will run all tasks in configuration");
+  }
+
+  console.log("Found total " + tasks.length + " replication task(s) to run");
+
   let totalRecords = 0;
   let latestCommit = null;
 
@@ -32,7 +49,7 @@ module.exports.replicate = async (event) => {
   for (let i = 0; i < tasks.length; i++) {
     const task = tasks[i];
 
-    console.log("Executing replication task: " + task.name);
+    console.log("== Executing replication task: " + task.name);
 
     const sourceClient = new elasticsearch.Client(
       task.source.elasticClientOpts
@@ -56,7 +73,7 @@ module.exports.replicate = async (event) => {
     console.log("Replication done");
     console.log("Total records: " + totalRecords);
     console.log("Latest checkpoint: " + latestCommit);
-    console.log("Completed replication task: " + task.name);
+    console.log("== Completed replication task: " + task.name);
   }
 
   console.log("Finished all replication tasks");

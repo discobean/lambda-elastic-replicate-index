@@ -28,5 +28,9 @@ provider:
 functions:
   replicate:
     handler: handler.replicate
+    environment:
+      # Task to replicate from the config-${opt:stage}.yaml file
+      # if no list exists, then all will be processed
+      TASK: replicate-test1
     events:
-      - schedule: rate(10 minutes)
+      - schedule: rate(1 minute)

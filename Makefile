@@ -4,3 +4,9 @@
 local:
 	node handler.js
 
+production:
+	./node_modules/.bin/serverless deploy -v --stage prod
+
+development:
+	./node_modules/.bin/serverless deploy -v --stage dev
+
