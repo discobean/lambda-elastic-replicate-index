@@ -24,7 +24,7 @@ tasks:
       index: the-index-to-replicate-to # where to replicate the data to
       # This are the options to the elasticsearch client, it is the object passed to start the client, similar above
       elasticClientOpts:
-        node: https://xyz.region2.ap-southeast-2.aws.found.io:9243
+        node: https://xyz.region2..aws.found.io:9243
         auth:
           username: elastic
           password: the_password
