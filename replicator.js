@@ -86,7 +86,6 @@ const syncDocuments = async (
     if (sourceHits.length === 0) break;
 
     const destinationBulkData = sourceHits.flatMap((doc) => {
-      console.log("It is: " + doc._source.updated);
       return [
         { index: { _index: task.destination.index, _id: doc._id } },
         doc._source,
