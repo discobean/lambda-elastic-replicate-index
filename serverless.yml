@@ -34,4 +34,4 @@ functions:
       # if no list exists, then all will be processed
       TASK: replicate-test1
     events:
-      - schedule: rate(1 minute)
+      - schedule: rate(5 minutes)

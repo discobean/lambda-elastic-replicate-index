@@ -1,22 +1,28 @@
+# This configuration has a single task called replicate-me
 tasks:
+  # The name of the task
   - name: replicate-me1
     source:
+      # These are the options for where to store the checkpoint data for the program
       getCheckpointOpts:
-        index: replicator-checkpoints
-        id: replicate-me1
-      searchUpdatedField: updated
+        index: replicator-checkpoints # name of the index to store, this can be the same for multiple tasks
+        id: replicate-me1 # this is the id of the checkpoint, it needs to be different for each task using the same source+index
+      searchUpdatedField: updated # the field with the updated date for the document for, e.g. updatedAt, created, updated, timestamp etc..
+      # Options for the search query when requesting data from the source
       searchOpts:
-        index: the-index-to-replicate-from
-        size: 5000
-        scroll: 30s
+        index: the-index-to-replicate-from # the index to fetch data from
+        size: 5000 # how many documents to fetch, see elasticsearch scroll documentation
+        scroll: 30s # the scroll timeout for the query, see elasticsearch scroll documentation
+      # This are the options to the elasticsearch client, it is the object passed to start the client
       elasticClientOpts:
-        node: https://xyz.region1.aws.found.io:9243
-        auth:
+        node: https://xyz.region1.aws.found.io:9243 # the endpoint of es
+        auth: # the auth details
           username: elastic
           password: the_password
         requestTimeout: 300000
     destination:
-      index: the-index-to-replicate-to
+      index: the-index-to-replicate-to # where to replicate the data to
+      # This are the options to the elasticsearch client, it is the object passed to start the client, similar above
       elasticClientOpts:
         node: https://xyz.region2.ap-southeast-2.aws.found.io:9243
         auth:
