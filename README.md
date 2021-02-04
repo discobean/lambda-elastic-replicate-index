@@ -1,5 +1,5 @@
 # lambda-elastic-replicate-index
-Replicate and sync an elastic index changes over time.
+Replicate and sync an elastic index changes over time.  (Cheap mans cross cluster replication)
 
 Deployed via nodejs' serverless.
 
