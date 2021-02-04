@@ -2,9 +2,10 @@
   "name": "lambda-elastic-replicate-index",
   "version": "1.0.0",
   "devDependencies": {
-    "@elastic/elasticsearch": "^7.10.0"
+    "serverless": "^2.22.0"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^7.10.0",
     "js-yaml": "^4.0.0",
     "lodash": "^4.17.20"
   }
