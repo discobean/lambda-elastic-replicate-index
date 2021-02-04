@@ -23,3 +23,39 @@ Essentially specify a `source` and `destination`, specify the search field `upda
 3. Edit the `config-dev.yaml` to add your configuration
 4. Review `serverless.yaml` to update as required
 5. `serverless deploy -v` or `make development`
+
+## How to get the `updated` field in elastic?
+You can either set the field manually each time you index or update documents.
+
+The other option is to use an ingest pipeline, this will ensure any update
+to the index will set a new updated field.  This is done like so:
+```
+PUT _ingest/pipeline/set-updated-timestamp
+{
+  "description": "add updated field to the document",
+  "processors": [
+    {
+      "set": {
+        "field": "_source.updated",
+        "value": "{{_ingest.timestamp}}"
+      }
+
+    }
+  ]
+}
+``` 
+
+Next, you have to assign this pipeline to your index, you can do this 2 ways:
+1. By setting the default pipeline in the index `_settings`
+2. Define the pipeline in an index template
+
+This example shows how to do it by setting the `_settings` directly in an index
+```
+PUT /my-index-i-want-to-replicate/_settings
+{
+  "default_pipeline" : "set-updated-timestamp"
+}
+```
+
+From now any updates to the index `my-index-i-want-to-replicate` will set a new
+`updated` field with a timestamp, ready to use for replication.
